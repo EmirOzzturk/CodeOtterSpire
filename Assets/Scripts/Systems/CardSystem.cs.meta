@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5c394aa4a85f434eb55b484fcaf2752e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardPrefab: {fileID: 944422388897988280, guid: 8e0b02778223a0e4680035a6c38ca205, type: 3}
+  - spawnPoint: {instanceID: 0}
+  - hand: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
