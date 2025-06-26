@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DrawCardsEffect : Effect
 {
-    [SerializeField] private int drawCardsAmount;
 
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)
     {
-        DrawCardsGA drawCardsGa = new(drawCardsAmount);
+
+        DrawCardsGA drawCardsGa = new(1);
         return drawCardsGa;
     }
 }

@@ -31,6 +31,7 @@ public class ManaSystem : Singleton<ManaSystem>
 
     public void ResetManaText()
     {
+        if (manaUI == null) return;
         manaUI.UpdateManaText(MAX_MANA);
     }
     

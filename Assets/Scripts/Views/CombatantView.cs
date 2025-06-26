@@ -28,6 +28,20 @@ public class CombatantView : MonoBehaviour
         UpdateHealthText();
         transform.DOShakePosition(0.2f, 0.3f);
     }
+
+    public void Heal(int heal)
+    {
+        if (CurrentHealth + heal <= MaxHealth)
+        {
+            CurrentHealth += heal;
+        }
+        else
+        {
+            CurrentHealth = MaxHealth;
+        }
+        
+        UpdateHealthText();
+    }
     
     private void UpdateHealthText()
     {

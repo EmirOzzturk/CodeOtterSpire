@@ -1254,6 +1254,7 @@ MonoBehaviour:
   handView: {fileID: 2129043783}
   drawPilePoint: {fileID: 1842346119}
   discardPilePoint: {fileID: 229905411}
+  drawCardsCount: 4
 --- !u!1 &654910351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,6 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageVFX: {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+  healVFX: {fileID: 0}
 --- !u!1 &912345202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,6 +2656,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 49b92a87658c24245aec84206abd6955, type: 2}
   - {fileID: 11400000, guid: dea400a36a0e12a4e81c33812dbef247, type: 2}
   - {fileID: 11400000, guid: 49b92a87658c24245aec84206abd6955, type: 2}
+  gameStartDrawCount: 4
 --- !u!1 &2008652960
 GameObject:
   m_ObjectHideFlags: 0
@@ -2805,6 +2808,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 154534947}
     m_Modifications:
+    - target: {fileID: 4960387603876962755, guid: abae386f1c37f6e4f8d5ecaf50910024, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960387603876962755, guid: abae386f1c37f6e4f8d5ecaf50910024, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960387603876962755, guid: abae386f1c37f6e4f8d5ecaf50910024, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960387603876962755, guid: abae386f1c37f6e4f8d5ecaf50910024, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8778761370592242693, guid: abae386f1c37f6e4f8d5ecaf50910024, type: 3}
       propertyPath: m_Name
       value: HeroView

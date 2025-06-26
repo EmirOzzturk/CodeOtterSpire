@@ -9,6 +9,7 @@ public class MatchSetupSystem : MonoBehaviour
     [SerializeField] private HeroData heroData;
     [SerializeField] private PerkData perkData;
     [SerializeField] private List<EnemyData> enemyDatas;
+    [SerializeField] private int gameStartDrawCount = 4;
 
     private void Start()
     {
@@ -16,9 +17,13 @@ public class MatchSetupSystem : MonoBehaviour
         ManaSystem.Instance.ResetManaText();
         EnemySystem.Instance.Setup(enemyDatas);
         CardSystem.Instance.Setup(heroData.Deck);
-        PerkSystem.Instance.AddPerk(new Perk(perkData));
-        
-        DrawCardsGA drawCardsGa = new(4);
+
+        if (perkData != null)
+        {
+            PerkSystem.Instance.AddPerk(new Perk(perkData));
+        }
+
+        DrawCardsGA drawCardsGa = new(gameStartDrawCount);
         ActionSystem.Instance.Perform(drawCardsGa);
     }
 }

@@ -12,6 +12,7 @@ namespace Systems.Card_System
         [SerializeField] private HandView handView;
         [SerializeField] private Transform drawPilePoint;
         [SerializeField] private Transform discardPilePoint;
+        [SerializeField] private int drawCardsCount = 4;
         
         private readonly List<Card> drawPile = new();
         private readonly List<Card> discardPile = new();
@@ -49,6 +50,7 @@ namespace Systems.Card_System
         // Performers
         private IEnumerator DrawCardsPerformer(DrawCardsGA drawCardsGa)
         {
+            // Debug.Log(drawCardsGa);
             int actualAmount = Mathf.Min(drawCardsGa.Amount, drawPile.Count);
             int notDrawnAmount = drawCardsGa.Amount - actualAmount;
             for (int i = 0; i < actualAmount; i++)
@@ -81,6 +83,11 @@ namespace Systems.Card_System
             CardView cardView = handView.RemoveCard(playCardGa.Card);
             yield return DiscardCard(cardView);
 
+            foreach (var perkData in playCardGa.Card.Perks)
+            {
+                PerkSystem.Instance.AddPerk(new Perk(perkData));
+            }
+            
             SpendManaGA spendManaGa = new SpendManaGA(playCardGa.Card.Mana);
             ActionSystem.Instance.AddReaction(spendManaGa);
 
@@ -106,8 +113,11 @@ namespace Systems.Card_System
         }
         private void EnemyTurnPostReaction(EnemyTurnGA enemyTurnGa)
         {
-            DrawCardsGA drawCardsGa = new(4);
-            ActionSystem.Instance.AddReaction(drawCardsGa);
+            for (int i = 0; i < drawCardsCount; i++)
+            {
+                DrawCardsGA drawCardsGa = new(1);
+                ActionSystem.Instance.AddReaction(drawCardsGa);   
+            }
         }
         
         // Helpers

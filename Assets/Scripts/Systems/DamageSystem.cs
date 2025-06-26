@@ -1,20 +1,21 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Action_System;
 using UnityEngine;
 
 public class DamageSystem : MonoBehaviour
 {
     [SerializeField] private GameObject damageVFX;
+    [SerializeField] private GameObject healVFX;
 
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<DealDamageGA>(DealDamagePerformer);
+        ActionSystem.AttachPerformer<HealDamageGA>(HealDamagePerformer);
     }
 
     private void OnDisable()
     {
+        ActionSystem.DetachPerformer<HealDamageGA>();
         ActionSystem.DetachPerformer<DealDamageGA>();
     }
 
@@ -22,9 +23,13 @@ public class DamageSystem : MonoBehaviour
     {
         foreach (var target in dealDamageGA.Targets)
         {
+            if (target == null) yield break;
             target.Damage(dealDamageGA.Amount);
-            Instantiate(damageVFX, target.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(0.2f);
+            if (damageVFX != null)
+            {
+                Instantiate(damageVFX, target.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.2f);
+            }
             if (target.CurrentHealth <= 0)
             {
                 if (target is EnemyView enemyView)
@@ -36,6 +41,19 @@ public class DamageSystem : MonoBehaviour
                 {
                     // Game End Logic
                 }
+            }
+        }
+    } 
+    
+    private IEnumerator HealDamagePerformer(HealDamageGA healDamageGA)
+    {
+        foreach (var target in healDamageGA.Targets)
+        {
+            target.Heal(healDamageGA.Amount);
+            if (healVFX != null)
+            {
+                Instantiate(healVFX, target.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.2f);
             }
         }
     } 
