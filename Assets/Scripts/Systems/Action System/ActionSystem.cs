@@ -12,6 +12,9 @@ namespace Action_System
         private static Dictionary<Type, List<Action<GameAction>>> preSubs = new();
         private static Dictionary<Type, List<Action<GameAction>>> postSubs = new();
         private static Dictionary<Type, Func<GameAction, IEnumerator>> performers = new();
+        
+        // Delegate'ler Referans değeri olduğu için o referansları da saklamalıyız.
+        private static readonly Dictionary<(Type, Delegate, ReactionTiming), Action<GameAction>> delegateMap = new();
 
         public void Perform(GameAction action, System.Action OnPerformFinished = null)
         {
@@ -94,6 +97,9 @@ namespace Action_System
             Dictionary<Type, List<Action<GameAction>>> subs = timing == ReactionTiming.PRE ? preSubs : postSubs;
             void WrappedReaction(GameAction action) => reaction((T)action);
             
+            var key = (typeof(T), reaction, timing);
+            delegateMap[key] = WrappedReaction;
+            
             if (subs.ContainsKey(typeof(T)))
             {
                 subs[typeof(T)].Add(WrappedReaction);
@@ -107,12 +113,18 @@ namespace Action_System
 
         public static void UnsubscribeReaction<T>(Action<T> reaction, ReactionTiming timing) where T : GameAction
         {
-            Dictionary<Type, List<Action<GameAction>>> subs =  timing == ReactionTiming.PRE ? preSubs : postSubs;
+            Dictionary<Type, List<Action<GameAction>>> subs = timing == ReactionTiming.PRE ? preSubs : postSubs;
 
-            if (subs.ContainsKey(typeof(T)))
+            var key = (typeof(T), reaction, timing);
+
+            if (delegateMap.TryGetValue(key, out var wrapped))
             {
-                void WrappedReaction(GameAction action) => reaction((T)action);
-                subs[typeof(T)].Remove(WrappedReaction);
+                if (subs.TryGetValue(typeof(T), out var list))
+                {
+                    list.Remove(wrapped);
+                }
+
+                delegateMap.Remove(key);
             }
         }
     }

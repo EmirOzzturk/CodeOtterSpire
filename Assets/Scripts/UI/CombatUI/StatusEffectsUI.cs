@@ -27,6 +27,7 @@ public class StatusEffectsUI : MonoBehaviour
                 statusEffectUIs.Add(statusEffectType, statusEffectUI);
             }
             Sprite sprite = GetSpriteByType(statusEffectType);
+            statusEffectUIs[statusEffectType].Set(sprite, stackCount);
         }
     }
 

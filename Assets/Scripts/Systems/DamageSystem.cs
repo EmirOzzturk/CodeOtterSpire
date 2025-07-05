@@ -28,7 +28,7 @@ public class DamageSystem : MonoBehaviour
             if (damageVFX != null)
             {
                 Instantiate(damageVFX, target.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.5f);
             }
             if (target.CurrentHealth <= 0)
             {
@@ -39,7 +39,7 @@ public class DamageSystem : MonoBehaviour
                 }
                 else
                 {
-                    // Game End Logic
+                    InCombatUISystem.Instance.ShowResultPanel(false);
                 }
             }
         }

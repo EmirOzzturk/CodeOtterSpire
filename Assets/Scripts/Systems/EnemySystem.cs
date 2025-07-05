@@ -56,5 +56,9 @@ public class EnemySystem : Singleton<EnemySystem>
     private IEnumerator KillEnemyPerformer(KillEnemyGA killEnemyGa)
     {
         yield return enemyBoardView.RemoveEnemy(killEnemyGa.EnemyView);
+        if (enemyBoardView.EnemyViews is { Count: 0 })
+        {
+            InCombatUISystem.Instance.ShowResultPanel(true);
+        }
     }
 }

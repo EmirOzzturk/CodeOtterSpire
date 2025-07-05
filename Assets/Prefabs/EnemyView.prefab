@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthText: {fileID: 844463258199036291}
   spriteRenderer: {fileID: 2129955355949272303}
+  statusEffectsUI: {fileID: 5549663023622146518}
   attackText: {fileID: 5188866652226814922}
 --- !u!65 &6571768202167100424
 BoxCollider:
@@ -336,6 +337,17 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1866599461973996274, guid: 46ccd59010611f04d8d4034a34adf10e, type: 3}
   m_PrefabInstance: {fileID: 317610762810506781}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5549663023622146518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5290669991785887691, guid: 46ccd59010611f04d8d4034a34adf10e, type: 3}
+  m_PrefabInstance: {fileID: 317610762810506781}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2abea6596d61840a735468ab3906be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9216677258099304238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8899207885746542899, guid: 46ccd59010611f04d8d4034a34adf10e, type: 3}

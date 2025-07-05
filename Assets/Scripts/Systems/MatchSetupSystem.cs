@@ -25,5 +25,16 @@ public class MatchSetupSystem : MonoBehaviour
 
         DrawCardsGA drawCardsGa = new(gameStartDrawCount);
         ActionSystem.Instance.Perform(drawCardsGa);
+        
+    }
+
+    private void OnDestroy()
+    {
+        QuitCombat();
+    }
+
+    private void QuitCombat()
+    {
+        PerkSystem.Instance?.RemoveAllPerks();
     }
 }
