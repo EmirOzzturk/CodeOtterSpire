@@ -10,4 +10,9 @@ public class DealDamageEffect : Effect
         DealDamageGA dealDamageGa = new(damageAmount, targets, caster);
         return dealDamageGa;
     }
+    
+    public override int GetEffectValue()
+    {
+        return damageAmount;
+    }
 }

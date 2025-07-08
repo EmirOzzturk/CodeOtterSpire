@@ -1,13 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using Action_System;
 using UnityEngine;
 
-public class HealDamageEffect : Effect
+public class HealAllDamageEnemyEffect : Effect
 {
     [SerializeField] private int healAmount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)
     {
-        HealDamageGA healDamageGa = new(healAmount, targets, caster);
+        HealDamageGA healDamageGa = new(healAmount, EnemySystem.Instance.Enemies.ToCombatantList(), caster);
         return healDamageGa;
+    }
+    
+    public override int GetEffectValue()
+    {
+        return healAmount;
     }
 }

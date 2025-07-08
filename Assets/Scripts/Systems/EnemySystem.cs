@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Action_System;
 using DG.Tweening;
+using NUnit.Framework;
 using UnityEngine;
+using Utils;
 
 public class EnemySystem : Singleton<EnemySystem>
 {
     [SerializeField] private EnemyBoardView enemyBoardView;
+    [SerializeField] private GameObject AddAttackPowerVFX;
     public List<EnemyView> Enemies => enemyBoardView.EnemyViews;
     
     void OnEnable()
@@ -15,10 +18,12 @@ public class EnemySystem : Singleton<EnemySystem>
         ActionSystem.AttachPerformer<EnemyTurnGA>(EnemyTurnPerformer);
         ActionSystem.AttachPerformer<AttackHeroGA>(AttackHeroPerformer);
         ActionSystem.AttachPerformer<KillEnemyGA>(KillEnemyPerformer);
+        ActionSystem.AttachPerformer<AddAttackPowerGA>(AddAttackPowerPerformer);
     }
 
     void OnDisable()
     {
+        ActionSystem.DetachPerformer<AddAttackPowerGA>();
         ActionSystem.DetachPerformer<KillEnemyGA>();
         ActionSystem.DetachPerformer<EnemyTurnGA>();
         ActionSystem.DetachPerformer<AttackHeroGA>();
@@ -30,6 +35,9 @@ public class EnemySystem : Singleton<EnemySystem>
         {
             enemyBoardView.AddEnemy(enemyData);        
         }
+        
+        // Her eksik enemy'de x eksenine 3 ekle
+        enemyBoardView.transform.position += new Vector3(9 - (enemyDatas.Count * 3), 0, 0);
     }
     
     // Performers
@@ -37,8 +45,13 @@ public class EnemySystem : Singleton<EnemySystem>
     {
         foreach (var enemy in enemyBoardView.EnemyViews)
         {
-            AttackHeroGA attackHeroGa = new(enemy);
-            ActionSystem.Instance.AddReaction(attackHeroGa);
+            foreach (var effect in enemy.EnemyEffects)
+            {
+                var targets = new List<CombatantView> { HeroSystem.Instance.HeroView };
+                PerformEffectGA performEffectGa =
+                    new(effect, targets, enemy);
+                ActionSystem.Instance.AddReaction(performEffectGa);
+            }
         }
         yield return null;
     }
@@ -59,6 +72,26 @@ public class EnemySystem : Singleton<EnemySystem>
         if (enemyBoardView.EnemyViews is { Count: 0 })
         {
             InCombatUISystem.Instance.ShowResultPanel(true);
+        }
+    }
+
+    private IEnumerator AddAttackPowerPerformer(AddAttackPowerGA addAttackPowerGa)
+    {
+        // Hedef yoksa coroutine'i hemen bitir
+        if (addAttackPowerGa.Targets == null || addAttackPowerGa.Targets.Count == 0)
+            yield break;
+        
+        // for döngüsü: GC yok, indeks erişimi hızlı
+        for (int i = 0; i < addAttackPowerGa.Targets.Count; i++)
+        {
+            var target = addAttackPowerGa.Targets[i];
+            target.AddAttackPower(addAttackPowerGa.Amount);
+
+            if (AddAttackPowerVFX != null)
+            {
+                Instantiate(AddAttackPowerVFX, target.transform.position  + Vector3.down, Quaternion.identity);
+                yield return Wait.Half;   // Statik nesne, GC yok
+            }
         }
     }
 }

@@ -9,6 +9,6 @@ public class AttackHeroGA : GameAction, IHaveCaster
     public AttackHeroGA(EnemyView attacker)
     {
         Attacker = attacker;
-        Caster = Attacker;
+        Caster = attacker;
     }
 }

@@ -659,7 +659,7 @@ Transform:
   m_GameObject: {fileID: 379125662}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1032,6 +1032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBoardView: {fileID: 1152102028}
+  AddAttackPowerVFX: {fileID: 3280519133390621005, guid: 6f7ad2528cf8cb247abae0ad89134bfa, type: 3}
 --- !u!1 &748215547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,8 +1603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79d92412acd2b24897f6c65148950b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageVFX: {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
-  healVFX: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+  damageVFX: {fileID: 5880797563127281583, guid: 7ddc16ed62890d345a36e020da2cd777, type: 3}
+  healVFX: {fileID: 8771972552311404799, guid: 3c75eb64db2879a4fb81c88db8bc7224, type: 3}
 --- !u!1 &1090333555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,7 +2553,7 @@ Transform:
   m_GameObject: {fileID: 1468413308}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2583,7 +2584,7 @@ Transform:
   m_GameObject: {fileID: 1490314865}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3454,7 +3455,7 @@ Transform:
   m_GameObject: {fileID: 1799278143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -6.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3473,7 +3474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08256584a30b41d498be4705d0b0c94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSpacing: 0.1
+  cardSpacing: 0.12
   splineContainer: {fileID: 834338716}
 --- !u!1 &1878484555
 GameObject:

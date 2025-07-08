@@ -19,7 +19,7 @@ public class EffectSystem : MonoBehaviour
     private IEnumerator PerformEffectPerformer(PerformEffectGA performEffectGa)
     {
         if (performEffectGa.Effect == null) yield break;
-        GameAction effectAction = performEffectGa.Effect.GetGameAction(performEffectGa.Targets, HeroSystem.Instance.HeroView);
+        GameAction effectAction = performEffectGa.Effect.GetGameAction(performEffectGa.Targets, performEffectGa.Caster);
         ActionSystem.Instance.AddReaction(effectAction);
         yield return null;
     }

@@ -3,24 +3,23 @@ using System.Linq;
 using Action_System;
 using UnityEngine;
 
-public class AddAttackPowerEnemyEffect : Effect
+
+public class HealOtherEnemiesEnemyEffect : Effect
 {
-    [SerializeField] private int attackPowerAmount;
-    
+    [SerializeField] private int healAmount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)
     {
         // Düşmanlardan Caster'ı çıkartır.
         var enemyTargets = EnemySystem.Instance.Enemies
             .Where(t => t != caster)
-            .ToList();
-
-        AddAttackPowerGA AddAttackPowerGA = new(attackPowerAmount, enemyTargets, caster);
-        var enemy = (EnemyView)caster;
-        return AddAttackPowerGA;
+            .ToCombatantList();
+        
+        HealDamageGA healDamageGa = new(healAmount, enemyTargets, caster);
+        return healDamageGa;
     }
-
+    
     public override int GetEffectValue()
     {
-        return attackPowerAmount;
+        return healAmount;
     }
 }

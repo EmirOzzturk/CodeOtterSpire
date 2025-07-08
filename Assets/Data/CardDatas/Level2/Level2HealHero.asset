@@ -15,7 +15,8 @@ MonoBehaviour:
   <CardName>k__BackingField: Heal
   <Description>k__BackingField: Heal Yourself 10 HP
   <Mana>k__BackingField: 1
-  <Image>k__BackingField: {fileID: 21300000, guid: 8cd148c2f31fbfd4dacf71384ff22dac, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: f459e170034c47240818cf8f6bd514b2, type: 3}
+  <Perks>k__BackingField: []
   <ManualTargetEffect>k__BackingField:
     rid: -2
   <OtherEffects>k__BackingField:

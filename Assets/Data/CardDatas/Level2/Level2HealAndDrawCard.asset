@@ -15,7 +15,7 @@ MonoBehaviour:
   <CardName>k__BackingField: Meditation
   <Description>k__BackingField: Heal 6 and Draw 1
   <Mana>k__BackingField: 1
-  <Image>k__BackingField: {fileID: -3861632723532882074, guid: 9a4b781daef83e94ea4d2e8676004546, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: 64d961a21c7c6994f9835f576f710e79, type: 3}
   <Perks>k__BackingField: []
   <ManualTargetEffect>k__BackingField:
     rid: -2

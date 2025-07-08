@@ -15,7 +15,8 @@ MonoBehaviour:
   <CardName>k__BackingField: Fireball
   <Description>k__BackingField: Hit 15 Damage to One Enemy
   <Mana>k__BackingField: 2
-  <Image>k__BackingField: {fileID: 21300000, guid: b293bb7bc5ec83548b0a0b0173e6d009, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: fb16961bd1c8f634bb43d7835b075229, type: 3}
+  <Perks>k__BackingField: []
   <ManualTargetEffect>k__BackingField:
     rid: 6538695923114704968
   <OtherEffects>k__BackingField: []

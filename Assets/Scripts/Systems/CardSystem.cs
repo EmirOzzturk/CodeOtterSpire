@@ -94,13 +94,13 @@ namespace Systems.Card_System
             if (playCardGa.Card.ManualTargetEffect != null)
             {
                 PerformEffectGA performEffectGa =
-                    new(playCardGa.Card.ManualTargetEffect, new() { playCardGa.ManualTarget });
+                    new(playCardGa.Card.ManualTargetEffect, new() { playCardGa.ManualTarget }, HeroSystem.Instance.HeroView);
                 ActionSystem.Instance.AddReaction(performEffectGa);
             }
             foreach (var effectWrapper in playCardGa.Card.OtherEffects)
             {
                 List<CombatantView> targets = effectWrapper.TargetMode.GetTargets();
-                PerformEffectGA performEffectGa = new(effectWrapper.Effect, targets);
+                PerformEffectGA performEffectGa = new(effectWrapper.Effect, targets, HeroSystem.Instance.HeroView);
                 ActionSystem.Instance.AddReaction(performEffectGa);
             }
         }

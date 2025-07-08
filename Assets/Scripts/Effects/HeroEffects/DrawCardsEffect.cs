@@ -11,4 +11,9 @@ public class DrawCardsEffect : Effect
         DrawCardsGA drawCardsGa = new(1);
         return drawCardsGa;
     }
+    
+    public override int GetEffectValue()
+    {
+        return 1;
+    }
 }

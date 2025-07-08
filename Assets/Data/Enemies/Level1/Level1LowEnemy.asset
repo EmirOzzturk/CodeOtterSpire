@@ -15,3 +15,11 @@ MonoBehaviour:
   <Image>k__BackingField: {fileID: 21300000, guid: 89d64997cfc521148ad64c241cb575ce, type: 3}
   <Health>k__BackingField: 20
   <AttackPower>k__BackingField: 20
+  <EnemyEffect>k__BackingField:
+  - rid: 6993868151000924253
+  references:
+    version: 2
+    RefIds:
+    - rid: 6993868151000924253
+      type: {class: DealDamageEnemyEffect, ns: , asm: Assembly-CSharp}
+      data: 

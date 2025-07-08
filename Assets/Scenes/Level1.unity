@@ -750,7 +750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 379125663}
   m_Layer: 0
-  m_Name: Slot 2
+  m_Name: Slot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1499,6 +1499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBoardView: {fileID: 1152102028}
+  AddAttackPowerVFX: {fileID: 3280519133390621005, guid: 6f7ad2528cf8cb247abae0ad89134bfa, type: 3}
 --- !u!1 &704833664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,8 +2106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79d92412acd2b24897f6c65148950b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageVFX: {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
-  healVFX: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+  damageVFX: {fileID: 5880797563127281583, guid: 7ddc16ed62890d345a36e020da2cd777, type: 3}
+  healVFX: {fileID: 8771972552311404799, guid: 3c75eb64db2879a4fb81c88db8bc7224, type: 3}
 --- !u!1 &1137953709
 GameObject:
   m_ObjectHideFlags: 0
@@ -2261,9 +2262,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1468413309}
   - {fileID: 1490314866}
   - {fileID: 379125663}
-  - {fileID: 1468413309}
   m_Father: {fileID: 1423066728}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1152102028
@@ -2279,9 +2280,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots:
+  - {fileID: 1468413309}
   - {fileID: 1490314866}
   - {fileID: 379125663}
-  - {fileID: 1468413309}
 --- !u!1 &1197802354
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,9 +2451,9 @@ MonoBehaviour:
   heroData: {fileID: 11400000, guid: c129164006f12df4fb2c8e6bd59def06, type: 2}
   perkData: {fileID: 0}
   enemyDatas:
+  - {fileID: 11400000, guid: 9e78f43f81b2b7148a8f54cac11be94c, type: 2}
   - {fileID: 11400000, guid: 9e9df783271fc164bbdf4f8dc380a61a, type: 2}
   - {fileID: 11400000, guid: 6cebddd0f17f8c84f811bc6f191d6b75, type: 2}
-  - {fileID: 11400000, guid: 9e78f43f81b2b7148a8f54cac11be94c, type: 2}
   gameStartDrawCount: 4
 --- !u!1 &1423066727
 GameObject:
@@ -2693,7 +2694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468413309}
   m_Layer: 0
-  m_Name: Slot 3
+  m_Name: Slot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2750,7 +2751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.15, y: 0.25100002}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.11999512, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1485390606
@@ -2814,7 +2815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1490314866}
   m_Layer: 0
-  m_Name: Slot 1
+  m_Name: Slot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3521,7 +3522,7 @@ Transform:
   m_GameObject: {fileID: 1799278143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -6.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3540,7 +3541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08256584a30b41d498be4705d0b0c94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSpacing: 0.1
+  cardSpacing: 0.12
   splineContainer: {fileID: 834338716}
 --- !u!1 &1878484555
 GameObject:
