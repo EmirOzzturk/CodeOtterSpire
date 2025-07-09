@@ -1,8 +1,9 @@
 using System.Collections;
 using Action_System;
 using UnityEngine;
+using Utils;
 
-public class DamageSystem : MonoBehaviour
+public class DamageSystem : Singleton<DamageSystem>
 {
     [SerializeField] private GameObject damageVFX;
     [SerializeField] private GameObject healVFX;
@@ -18,6 +19,23 @@ public class DamageSystem : MonoBehaviour
         ActionSystem.DetachPerformer<HealDamageGA>();
         ActionSystem.DetachPerformer<DealDamageGA>();
     }
+    
+    // publics
+    public void CheckCombatantViewIsDead(CombatantView target)
+    {
+        if (target.CurrentHealth <= 0)
+        {
+            if (target is EnemyView enemyView)
+            {
+                KillEnemyGA killEnemyGa = new(enemyView);
+                ActionSystem.Instance.AddReaction(killEnemyGa);
+            }
+            else
+            {
+                InCombatUISystem.Instance.ShowResultPanel(false);
+            }
+        }
+    }
 
     private IEnumerator DealDamagePerformer(DealDamageGA dealDamageGA)
     {
@@ -28,20 +46,10 @@ public class DamageSystem : MonoBehaviour
             if (damageVFX != null)
             {
                 Instantiate(damageVFX, target.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.5f);
+                yield return Wait.Half;
             }
-            if (target.CurrentHealth <= 0)
-            {
-                if (target is EnemyView enemyView)
-                {
-                    KillEnemyGA killEnemyGa = new(enemyView);
-                    ActionSystem.Instance.AddReaction(killEnemyGa);
-                }
-                else
-                {
-                    InCombatUISystem.Instance.ShowResultPanel(false);
-                }
-            }
+            
+            CheckCombatantViewIsDead(target);
         }
     } 
     

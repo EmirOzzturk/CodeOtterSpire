@@ -45,6 +45,13 @@ public class EnemySystem : Singleton<EnemySystem>
     {
         foreach (var enemy in enemyBoardView.EnemyViews)
         {
+            int burnStacks = enemy.GetStatusEffectStacks(StatusEffectType.BURN);
+            if (burnStacks > 0)
+            {
+                ApplyBurnGA applyBurnGa = new(burnStacks, enemy);
+                ActionSystem.Instance.AddReaction(applyBurnGa);
+            }
+            
             foreach (var effect in enemy.EnemyEffects)
             {
                 var targets = new List<CombatantView> { HeroSystem.Instance.HeroView };
@@ -58,7 +65,9 @@ public class EnemySystem : Singleton<EnemySystem>
 
     private IEnumerator AttackHeroPerformer(AttackHeroGA attackHeroGa)
     {
-        EnemyView attacker = attackHeroGa.Attacker;
+        EnemyView attacker = attackHeroGa?.Attacker;
+        if (attacker == null) yield break;
+        
         Tween tween = attacker.transform.DOMoveX(attacker.transform.position.x - 1f, 0.15f);
         yield return tween.WaitForCompletion();
         attacker.transform.DOMoveX(attacker.transform.position.x + 1f, 0.25f);

@@ -24,8 +24,6 @@ namespace Systems.Card_System
             ActionSystem.AttachPerformer<DrawCardsGA>(DrawCardsPerformer);
             ActionSystem.AttachPerformer<DiscardAllCardsGA>(DiscardAllCardPerformer);
             ActionSystem.AttachPerformer<PlayCardGA>(PlayCardPerformer);
-            ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
-            ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
         }
 
         private void OnDisable()
@@ -33,8 +31,6 @@ namespace Systems.Card_System
             ActionSystem.DetachPerformer<DrawCardsGA>();
             ActionSystem.DetachPerformer<DiscardAllCardsGA>();
             ActionSystem.DetachPerformer<PlayCardGA>();
-            ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
-            ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);            
         }
         
         // Publics
@@ -45,6 +41,11 @@ namespace Systems.Card_System
                 Card card = new(cardData);
                 drawPile.Add(card);
             }
+        }
+
+        public int GetDrawCardsCount()
+        {
+            return drawCardsCount;
         }
 
         // Performers
@@ -102,21 +103,6 @@ namespace Systems.Card_System
                 List<CombatantView> targets = effectWrapper.TargetMode.GetTargets();
                 PerformEffectGA performEffectGa = new(effectWrapper.Effect, targets, HeroSystem.Instance.HeroView);
                 ActionSystem.Instance.AddReaction(performEffectGa);
-            }
-        }
-
-        // Reactions
-        private void EnemyTurnPreReaction(EnemyTurnGA enemyTurnGa)
-        {
-            DiscardAllCardsGA discardAllCardsGa = new();
-            ActionSystem.Instance.AddReaction(discardAllCardsGa);
-        }
-        private void EnemyTurnPostReaction(EnemyTurnGA enemyTurnGa)
-        {
-            for (int i = 0; i < drawCardsCount; i++)
-            {
-                DrawCardsGA drawCardsGa = new(1);
-                ActionSystem.Instance.AddReaction(drawCardsGa);   
             }
         }
         
