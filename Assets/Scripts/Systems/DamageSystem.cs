@@ -46,6 +46,7 @@ public class DamageSystem : Singleton<DamageSystem>
             if (damageVFX != null)
             {
                 Instantiate(damageVFX, target.transform.position, Quaternion.identity);
+                SFXSystem.Instance.Play(SFXType.Hit);
                 yield return Wait.Half;
             }
             

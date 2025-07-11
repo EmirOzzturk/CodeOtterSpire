@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 587265206}
   - component: {fileID: 587265208}
   m_Layer: 0
-  m_Name: SCENELOADSYSTEM
+  m_Name: SceneLoadfSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -581,6 +581,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2da1249a8585544a9b8183a4088259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1135553452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1135553454}
+  - component: {fileID: 1135553453}
+  - component: {fileID: 1135553455}
+  m_Layer: 0
+  m_Name: MusicSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1135553453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135553452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 780f8b067700ebc4ebd77aaf39f0e1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneMusicMap: {fileID: 11400000, guid: e16ac5d003e92614bb0d110a052053c6, type: 2}
+  musicMixerGroup: {fileID: -6658681197959689361, guid: 38409765a6c54ab4a9d0cae74c1c23cd, type: 2}
+  fadeDuration: 1
+--- !u!4 &1135553454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135553452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 996.9519, y: 485.36597, z: -2.6059499}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1135553455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135553452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e8f9cec5a623047b2bc0866a1e8a6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  library: {fileID: 11400000, guid: 41506a25113642943ade3b3014bb9fac, type: 2}
+  sfxGroup: {fileID: 6846361721326758320, guid: 38409765a6c54ab4a9d0cae74c1c23cd, type: 2}
+  poolSize: 6
 --- !u!1 &1210207805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,7 +1597,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1709596057}
   - {fileID: 1980601104}
-  - {fileID: 1578103940}
   - {fileID: 346654980}
   - {fileID: 1524973357}
+  - {fileID: 1578103940}
   - {fileID: 587265206}
+  - {fileID: 1135553454}
