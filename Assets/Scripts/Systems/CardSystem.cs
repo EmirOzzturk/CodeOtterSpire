@@ -12,7 +12,6 @@ namespace Systems.Card_System
         [SerializeField] private HandView handView;
         [SerializeField] private Transform drawPilePoint;
         [SerializeField] private Transform discardPilePoint;
-        [SerializeField] private int drawCardsCount = 4;
         
         private readonly List<Card> drawPile = new();
         private readonly List<Card> discardPile = new();
@@ -43,15 +42,9 @@ namespace Systems.Card_System
             }
         }
 
-        public int GetDrawCardsCount()
-        {
-            return drawCardsCount;
-        }
-
         // Performers
         private IEnumerator DrawCardsPerformer(DrawCardsGA drawCardsGa)
         {
-            // Debug.Log(drawCardsGa);
             int actualAmount = Mathf.Min(drawCardsGa.Amount, drawPile.Count);
             int notDrawnAmount = drawCardsGa.Amount - actualAmount;
             for (int i = 0; i < actualAmount; i++)
@@ -130,7 +123,6 @@ namespace Systems.Card_System
             CardView cardView = CardViewCreator.Instance.CreateCardView(card, drawPilePoint.position, drawPilePoint.rotation);
             yield return handView.AddCard(cardView);
         }
-
 
     }
 }

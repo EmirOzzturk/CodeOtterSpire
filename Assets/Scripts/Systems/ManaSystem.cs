@@ -6,9 +6,15 @@ using UnityEngine;
 public class ManaSystem : Singleton<ManaSystem>
 {
     [SerializeField] private ManaUI manaUI;
-    private const int MAX_MANA = 3;
-    private int currentMana =  MAX_MANA;
-
+    private int MaxMana => HeroSystem.Instance.MaxMana;
+    
+    private int currentMana;
+    public int CurrentMana
+    {
+        get => currentMana;
+        private set => currentMana = Math.Clamp(value, 0, MaxMana);
+    }
+    
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<SpendManaGA>(SpendManaPerformer);
@@ -26,26 +32,27 @@ public class ManaSystem : Singleton<ManaSystem>
     // Publics
     public bool HasEnoughMana(int amount)
     {
-        return currentMana >= amount;
+        return CurrentMana >= amount;
     }
 
     public void ResetManaText()
     {
         if (manaUI == null) return;
-        manaUI.UpdateManaText(MAX_MANA);
+        currentMana = MaxMana;
+        manaUI.UpdateManaText(MaxMana);
     }
     
     // Performers
     private IEnumerator SpendManaPerformer(SpendManaGA spendManaGa)
     {   
-        currentMana -= spendManaGa.Amount;
-        manaUI.UpdateManaText(currentMana);
+        CurrentMana -= spendManaGa.Amount;
+        manaUI.UpdateManaText(CurrentMana);
         yield return null;
     }
     private IEnumerator RefillManaPerformer(RefillManaGA refillManaGa)
     {
-        currentMana = MAX_MANA;
-        manaUI.UpdateManaText(currentMana);
+        CurrentMana = MaxMana;
+        manaUI.UpdateManaText(CurrentMana);
         yield return null;
     }
     

@@ -6,26 +6,24 @@ using UnityEngine;
 
 public class MatchSetupSystem : MonoBehaviour
 {
-    [SerializeField] private HeroData heroData;
-    [SerializeField] private PerkData perkData;
     [SerializeField] private List<EnemyData> enemyDatas;
-    [SerializeField] private int gameStartDrawCount = 4;
 
     private void Start()
     {
-        HeroSystem.Instance.Setup(heroData);   
+        HeroSystem.Instance.Setup(HeroEnum.KNIGHT);   
         ManaSystem.Instance.ResetManaText();
         EnemySystem.Instance.Setup(enemyDatas);
-        CardSystem.Instance.Setup(heroData.Deck);
 
-        if (perkData != null)
+        if (HeroSystem.Instance.GetInitialPerkData() != null)
         {
-            PerkSystem.Instance.AddPerk(new Perk(perkData));
+            foreach (PerkData perkData in HeroSystem.Instance.GetInitialPerkData())
+            { 
+                PerkSystem.Instance.AddPerk(new Perk(perkData));
+            }
         }
-
-        DrawCardsGA drawCardsGa = new(gameStartDrawCount);
-        ActionSystem.Instance.Perform(drawCardsGa);
         
+        DrawCardsGA drawCardsGa = new(HeroSystem.Instance.CardDrawAmount);
+        ActionSystem.Instance.Perform(drawCardsGa);
     }
 
     private void OnDestroy()

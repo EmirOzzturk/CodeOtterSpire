@@ -13,6 +13,6 @@ public class DealDamageEnemyEffect : Effect
 
     public override int GetEffectValue()
     {
-        throw new NotImplementedException();
+        return -1;
     }
 }

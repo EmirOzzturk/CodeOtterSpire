@@ -1,10 +1,19 @@
+using System.Collections.Generic;
 using Action_System;
 using Systems.Card_System;
 using UnityEngine;
 
 public class HeroSystem : Singleton<HeroSystem>
 {
-    [field: SerializeField] public HeroView HeroView { get; private set; }
+    [SerializeField] private HeroEnum HeroEnum;
+    [SerializeField] private List<HeroData> HeroDataList;
+    [SerializeField] public HeroView HeroView;
+    
+    public int MaxMana { get; private set; }
+    public int Attack { get; private set; }
+    public int Defense { get; private set; }
+    public int CardDrawAmount { get; private set; }
+    private List<PerkData> InitialPerkDatas = new();
 
     private void OnEnable()
     {
@@ -17,11 +26,26 @@ public class HeroSystem : Singleton<HeroSystem>
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);            
     }
-    public void Setup(HeroData heroData)
-    {
-        HeroView.Setup(heroData);
-    }
     
+    // Publics
+    public void Setup(HeroEnum hero)
+    {
+        var heroData = HeroDataList[(int)hero];
+        
+        MaxMana = heroData.MaxMana;
+        Attack = heroData.Attack;
+        Defense = heroData.Defense;
+        CardDrawAmount = heroData.CardDrawAmount;
+        InitialPerkDatas = heroData.InitialPerkDatas;
+        
+        HeroView.Setup(heroData);
+        CardSystem.Instance.Setup(heroData.Deck);
+    }
+
+    public List<PerkData> GetInitialPerkData()
+    {
+        return InitialPerkDatas;
+    }
     
     // Reactions
     private void EnemyTurnPreReaction(EnemyTurnGA enemyTurnGa)
@@ -38,7 +62,7 @@ public class HeroSystem : Singleton<HeroSystem>
             ActionSystem.Instance.AddReaction(applyBurnGa);
         }
         
-        for (int i = 0; i < CardSystem.Instance.GetDrawCardsCount(); i++)
+        for (int i = 0; i < CardDrawAmount; i++)
         {
             DrawCardsGA drawCardsGa = new(1);
             ActionSystem.Instance.AddReaction(drawCardsGa);   

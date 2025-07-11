@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7cba41e9b0a094988408dcc252ab61, type: 3}
   m_Name: Level1HighEnemy
   m_EditorClassIdentifier: 
-  <Image>k__BackingField: {fileID: 21300000, guid: 934a60bcc6e5fea43ab3a6455cbf3004, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: a542afd9f050c0d479689a214b203fca, type: 3}
   <IntentType>k__BackingField: 0
   <Health>k__BackingField: 40
   <AttackPower>k__BackingField: 10

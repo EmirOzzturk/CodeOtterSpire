@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779f0c234d37de845a10d7b7320c180a, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
+  <CardName>k__BackingField: 
   <Description>k__BackingField: Throw fireball
   <Mana>k__BackingField: 1
   <Image>k__BackingField: {fileID: 21300000, guid: b293bb7bc5ec83548b0a0b0173e6d009, type: 3}
+  <Perks>k__BackingField: []
   <ManualTargetEffect>k__BackingField:
-    rid: 6538695719168507980
+    rid: 6993868323832987726
   <OtherEffects>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: 6538695719168507980
-      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
+    - rid: 6993868323832987726
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
-        damageAmount: 10
+        statusEffectType: 1
+        stackCount: 331
