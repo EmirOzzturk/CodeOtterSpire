@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 824385391}
   - component: {fileID: 824385390}
   m_Layer: 5
-  m_Name: Level2SelectText
+  m_Name: SettingsButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 936733072}
   - component: {fileID: 936733075}
   m_Layer: 5
-  m_Name: Level1SelectButton
+  m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,7 +521,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 936733075}
         m_TargetAssemblyTypeName: LevelSelectUI, Assembly-CSharp
-        m_MethodName: LoadLevel1
+        m_MethodName: LoadCharacterChooseScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 1210207808}
   - component: {fileID: 1210207807}
   m_Layer: 5
-  m_Name: Level3SelectButton
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 1387334938}
   - component: {fileID: 1387334937}
   m_Layer: 5
-  m_Name: Level2SelectButton
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 1942280760}
   - component: {fileID: 1942280759}
   m_Layer: 5
-  m_Name: Level1SelectText
+  m_Name: PlayButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

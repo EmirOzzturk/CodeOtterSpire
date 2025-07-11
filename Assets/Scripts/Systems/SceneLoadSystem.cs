@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SceneLoadSystem : PersistentSingleton<SceneLoadSystem>
-{
+{ 
+    public HeroEnum heroEnum { get; set; }
+    
     public Action<string> OnSceneLoadStarted;
     public Action<string> OnSceneLoadCompleted;
     

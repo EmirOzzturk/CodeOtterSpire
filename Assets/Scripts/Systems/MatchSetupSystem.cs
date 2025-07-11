@@ -10,7 +10,7 @@ public class MatchSetupSystem : MonoBehaviour
 
     private void Start()
     {
-        HeroSystem.Instance.Setup(HeroEnum.KNIGHT);   
+        HeroSystem.Instance.Setup();
         ManaSystem.Instance.ResetManaText();
         EnemySystem.Instance.Setup(enemyDatas);
 

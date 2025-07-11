@@ -17,6 +17,11 @@ public class LevelSelectUI : MonoBehaviour
         SceneLoadSystem.Instance.LoadScene("Level3");
     }
 
+    public void LoadCharacterChooseScene()
+    {
+        SceneLoadSystem.Instance.LoadScene("CharacterChooseScene");
+    }
+
     public void LoadMainMenu()
     {
         SceneLoadSystem.Instance.LoadScene("MainScreen");

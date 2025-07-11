@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class HeroSystem : Singleton<HeroSystem>
 {
-    [SerializeField] private HeroEnum HeroEnum;
     [SerializeField] private List<HeroData> HeroDataList;
     [SerializeField] public HeroView HeroView;
     
@@ -28,9 +27,9 @@ public class HeroSystem : Singleton<HeroSystem>
     }
     
     // Publics
-    public void Setup(HeroEnum hero)
+    public void Setup()
     {
-        var heroData = HeroDataList[(int)hero];
+        var heroData = HeroDataList.Find((heroData) => heroData.HeroEnum == SceneLoadSystem.Instance.heroEnum);
         
         MaxMana = heroData.MaxMana;
         Attack = heroData.Attack;

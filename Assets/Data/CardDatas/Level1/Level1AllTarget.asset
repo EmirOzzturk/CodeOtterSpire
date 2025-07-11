@@ -35,4 +35,4 @@ MonoBehaviour:
     - rid: 4729419148558860364
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damageAmount: 10
+        damageAmount: 100
