@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Action_System;
 using UnityEngine;
 
-public class DealDamageEffect : Effect
+public class DealDamageEffect : CardEffect
 {
     [SerializeField] private int damageAmount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)

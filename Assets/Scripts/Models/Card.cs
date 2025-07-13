@@ -9,7 +9,7 @@ public class Card
     public string Title => cardData.CardName; // Name of the Object
     public string Description => cardData.Description;
     public Sprite Image => cardData.Image;
-    public Effect ManualTargetEffect => cardData.ManualTargetEffect;
+    public CardEffect ManualTargetEffect => cardData.ManualTargetEffect;
     public List<PerkData> Perks => cardData.Perks;
     public List<AutoTargetEffect> OtherEffects => cardData.OtherEffects;
     public int Mana {get; private set;}

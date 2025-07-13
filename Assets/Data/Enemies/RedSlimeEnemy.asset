@@ -15,3 +15,16 @@ MonoBehaviour:
   <Image>k__BackingField: {fileID: 21300000, guid: 89d64997cfc521148ad64c241cb575ce, type: 3}
   <Health>k__BackingField: 30
   <AttackPower>k__BackingField: 40
+  IntentEffectMap:
+  - rid: 6993868401613996128
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 6993868401613996128
+      type: {class: EnemyData/IntentEffectPair, ns: , asm: Assembly-CSharp}
+      data:
+        intentType: 0
+        <enemyEffects>k__BackingField:
+        - rid: -2

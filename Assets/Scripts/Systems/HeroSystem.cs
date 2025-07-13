@@ -49,11 +49,13 @@ public class HeroSystem : Singleton<HeroSystem>
     // Reactions
     private void EnemyTurnPreReaction(EnemyTurnGA enemyTurnGa)
     {
+        TurnSystem.Instance.NextTurn();
         DiscardAllCardsGA discardAllCardsGa = new();
         ActionSystem.Instance.AddReaction(discardAllCardsGa);
     }
     private void EnemyTurnPostReaction(EnemyTurnGA enemyTurnGa)
     {
+        TurnSystem.Instance.NextTurn();
         int burnStacks = HeroView.GetStatusEffectStacks(StatusEffectType.BURN);
         if (burnStacks > 0)
         {

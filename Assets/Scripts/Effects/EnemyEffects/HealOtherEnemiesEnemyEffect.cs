@@ -4,7 +4,7 @@ using Action_System;
 using UnityEngine;
 
 
-public class HealOtherEnemiesEnemyEffect : Effect
+public class HealOtherEnemiesEnemyEffect : EnemyEffect
 {
     [SerializeField] private int healAmount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)

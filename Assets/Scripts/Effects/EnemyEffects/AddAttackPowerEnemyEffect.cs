@@ -3,7 +3,7 @@ using System.Linq;
 using Action_System;
 using UnityEngine;
 
-public class AddAttackPowerEnemyEffect : Effect
+public class AddAttackPowerEnemyEffect : EnemyEffect
 {
     [SerializeField] private int attackPowerAmount;
     
@@ -15,7 +15,6 @@ public class AddAttackPowerEnemyEffect : Effect
             .ToList();
 
         AddAttackPowerGA AddAttackPowerGA = new(attackPowerAmount, enemyTargets, caster);
-        var enemy = (EnemyView)caster;
         return AddAttackPowerGA;
     }
 

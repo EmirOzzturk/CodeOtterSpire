@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Action_System;
 using UnityEngine;
+using Utils;
 
 public class StatusEffectSystem : Singleton<StatusEffectSystem>
 {
@@ -20,7 +21,7 @@ public class StatusEffectSystem : Singleton<StatusEffectSystem>
         foreach (var target in addStatusEffectGA.Targets)
         {
             target.AddStatusEffect(addStatusEffectGA.StatusEffectType, addStatusEffectGA.StackCount);
-            yield return null; // add animation
+            yield return Wait.Quarter; // add animation
         }
     }
 }

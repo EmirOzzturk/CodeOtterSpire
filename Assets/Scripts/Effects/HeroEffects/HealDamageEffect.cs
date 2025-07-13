@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Action_System;
 using UnityEngine;
 
-public class HealDamageEffect : Effect
+public class HealDamageEffect : CardEffect
 {
     [SerializeField] private int healAmount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)

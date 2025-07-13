@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Action_System;
 using UnityEngine;
 
-public class AddStatusEffectEffect : CardEffect
+public class AddStatusEffectToHeroEnemyEffect : EnemyEffect
 {
     [SerializeField] private StatusEffectType statusEffectType;
     [SerializeField] private int stackCount;
@@ -10,7 +10,7 @@ public class AddStatusEffectEffect : CardEffect
     {
         return new AddStatusEffectGA(statusEffectType, stackCount, targets);
     }
-    
+
     public override int GetEffectValue()
     {
         return stackCount;

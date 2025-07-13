@@ -25,7 +25,7 @@ public class CardData : ScriptableObject
 
     /*────────── EFEKTLER ──────────*/
     [field: Header("    Efektler"), SerializeReference, SR]
-    public Effect ManualTargetEffect { get; private set; } = null;
+    public CardEffect ManualTargetEffect { get; private set; } = null;
 
     [field: SerializeField]
     public List<AutoTargetEffect> OtherEffects { get; private set; }

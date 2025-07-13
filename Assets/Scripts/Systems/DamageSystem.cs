@@ -62,7 +62,8 @@ public class DamageSystem : Singleton<DamageSystem>
             if (healVFX != null)
             {
                 Instantiate(healVFX, target.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.2f);
+                SFXSystem.Instance.Play(SFXType.Heal);
+                yield return Wait.Seconds(0.2f);
             }
         }
     } 

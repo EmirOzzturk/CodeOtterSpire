@@ -52,13 +52,22 @@ public class EnemySystem : Singleton<EnemySystem>
                 ActionSystem.Instance.AddReaction(applyBurnGa);
             }
             
-            foreach (var effect in enemy.EnemyEffects)
+            if (enemy.EnemyEffects is null)
             {
-                var targets = new List<CombatantView> { HeroSystem.Instance.HeroView };
-                PerformEffectGA performEffectGa =
-                    new(effect, targets, enemy);
-                ActionSystem.Instance.AddReaction(performEffectGa);
+                Debug.LogWarning($"{enemy.name} → EnemyEffects listesi boş.");
+                yield break;
             }
+            
+            // 2) Tüm efektleri sırayla uygula
+            var targets = new List<CombatantView> { HeroSystem.Instance.HeroView };
+
+            foreach (var effect in enemy.GetCurrentEffects())
+            {
+                ActionSystem.Instance.AddReaction(
+                    new PerformEffectGA(effect, targets, enemy)
+                );
+            }
+
         }
         yield return null;
     }
@@ -99,8 +108,10 @@ public class EnemySystem : Singleton<EnemySystem>
             if (AddAttackPowerVFX != null)
             {
                 Instantiate(AddAttackPowerVFX, target.transform.position  + Vector3.down, Quaternion.identity);
+                SFXSystem.Instance.Play(SFXType.Buff);
                 yield return Wait.Half;   // Statik nesne, GC yok
             }
         }
     }
+
 }
