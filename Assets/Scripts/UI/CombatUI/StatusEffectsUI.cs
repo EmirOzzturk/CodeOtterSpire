@@ -1,43 +1,79 @@
+using System;
 using System.Collections.Generic;
+using TMPro;            // Eğer StatusEffectUI içinde kullanıyorsanız
 using UnityEngine;
 
+/// <summary>
+/// Oyuncu veya düşman üzerindeki tüm durum etkilerini (armor, burn vb.)
+/// dinamik olarak gösterir.
+/// Inspector’da <see cref="StatusSpritePair"/> listesi üzerinden
+/// durum-sprite eşleşmelerini düzenleyebilirsiniz.
+/// </summary>
 public class StatusEffectsUI : MonoBehaviour
 {
-    [SerializeField] private StatusEffectUI statusEffectUIPrefab;
-    [SerializeField] private Sprite armorSprite, burnSprite;
-
-    private Dictionary<StatusEffectType, StatusEffectUI> statusEffectUIs = new();
-
-    public void UpdateStatusEffectUI(StatusEffectType statusEffectType, int stackCount)
+    [Serializable]
+    private struct StatusSpritePair
     {
-        if (stackCount <= 0)
+        public StatusEffectType statusType;
+        public Sprite           sprite;
+    }
+
+    [Header("Sprite Eşleşmeleri")]
+    [SerializeField] private List<StatusSpritePair> spritePairs = new();
+
+    [Header("Prefab")]
+    [SerializeField] private StatusEffectUI statusEffectUIPrefab;
+
+    // —— Dahili ————————————————————————————————————————————————
+    private readonly Dictionary<StatusEffectType, StatusEffectUI> _activeUIs   = new();
+    private readonly Dictionary<StatusEffectType, Sprite>         _spriteLookup = new();
+
+    private void Awake()
+    {
+        // Inspector’daki listeyi hızlı erişim için dictionary’ye aktar
+        foreach (var pair in spritePairs)
         {
-            if (statusEffectUIs.ContainsKey(statusEffectType))
+            if (pair.sprite == null)
             {
-                StatusEffectUI statusEffectUI = statusEffectUIs[statusEffectType];
-                statusEffectUIs.Remove(statusEffectType);
-                Destroy(statusEffectUI.gameObject);
+                Debug.LogWarning($"{name}: '{pair.statusType}' için sprite atanmamış.", this);
+                continue;
             }
-        }
-        else
-        {
-            if (!statusEffectUIs.ContainsKey(statusEffectType))
+            if (_spriteLookup.ContainsKey(pair.statusType))
             {
-                StatusEffectUI statusEffectUI = Instantiate(statusEffectUIPrefab, transform);
-                statusEffectUIs.Add(statusEffectType, statusEffectUI);
+                Debug.LogWarning($"{name}: '{pair.statusType}' için birden fazla sprite var. İlk değer kullanılacak.", this);
+                continue;
             }
-            Sprite sprite = GetSpriteByType(statusEffectType);
-            statusEffectUIs[statusEffectType].Set(sprite, stackCount);
+            _spriteLookup.Add(pair.statusType, pair.sprite);
         }
     }
 
-    private Sprite GetSpriteByType(StatusEffectType statusEffectType)
+    /// <summary>
+    /// İlgili durum etkisini günceller veya kaldırır.
+    /// </summary>
+    public void UpdateStatusEffectUI(StatusEffectType type, int stackCount)
     {
-        return statusEffectType switch
+        // ⬇ Kaldırılacaksa
+        if (stackCount <= 0)
         {
-            StatusEffectType.ARMOR => armorSprite,
-            StatusEffectType.BURN => burnSprite,
-            _ => null,
-        };
+            if (_activeUIs.TryGetValue(type, out var ui))
+            {
+                _activeUIs.Remove(type);
+                Destroy(ui.gameObject);      // Basit örnek: pooling düşünüyorsanız burayı değiştirin
+            }
+            return;
+        }
+
+        // ⬇ Yoksa oluştur
+        if (!_activeUIs.TryGetValue(type, out var statusUI))
+        {
+            statusUI = Instantiate(statusEffectUIPrefab, transform);
+            _activeUIs.Add(type, statusUI);
+        }
+
+        // ⬇ Sprite seç ve UI’yı güncelle
+        if (_spriteLookup.TryGetValue(type, out var sprite))
+            statusUI.Set(sprite, stackCount);
+        else
+            Debug.LogWarning($"{name}: '{type}' türü için sprite bulunamadı.", this);
     }
 }

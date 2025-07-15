@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Action_System;
 using Systems.Card_System;
@@ -18,12 +20,27 @@ public class HeroSystem : Singleton<HeroSystem>
     {
         ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
         ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
+        ActionSystem.AttachPerformer<HeroAttackedWhileStealthGA>(HeroAttackedWhileStealthPerformer);
     }
 
     private void OnDisable()
     {
+        ActionSystem.DetachPerformer<HeroAttackedWhileStealthGA>();
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);            
+    }
+
+    private void Start()
+    {
+        if (SceneLoadSystem.Instance.GetCurrentSceneName() == "Level1")
+        {
+            HeroView.SetupHeroHealth = null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        HeroView.SetupHeroHealth = HeroView.CurrentHealth;
     }
     
     // Publics
@@ -46,21 +63,49 @@ public class HeroSystem : Singleton<HeroSystem>
         return InitialPerkDatas;
     }
     
+    // Performers
+    private IEnumerator HeroAttackedWhileStealthPerformer(HeroAttackedWhileStealthGA heroAttackedWhileStealthGa)
+    {
+        yield return null;
+    }
+    
     // Reactions
     private void EnemyTurnPreReaction(EnemyTurnGA enemyTurnGa)
     {
         TurnSystem.Instance.NextTurn();
         DiscardAllCardsGA discardAllCardsGa = new();
         ActionSystem.Instance.AddReaction(discardAllCardsGa);
+        
+        int vulnerableStacks = HeroView.GetStatusEffectStacks(StatusEffectType.VULNERABLE);
+        if (vulnerableStacks > 0)
+        {
+            ApplyVulnerableGA applyVulnerableGa = new(vulnerableStacks, HeroView);
+            ActionSystem.Instance.AddReaction(applyVulnerableGa);
+        }
     }
     private void EnemyTurnPostReaction(EnemyTurnGA enemyTurnGa)
     {
         TurnSystem.Instance.NextTurn();
+        
         int burnStacks = HeroView.GetStatusEffectStacks(StatusEffectType.BURN);
         if (burnStacks > 0)
         {
             ApplyBurnGA applyBurnGa = new(burnStacks, HeroView);
             ActionSystem.Instance.AddReaction(applyBurnGa);
+        }
+        
+        int stealthStacks = HeroView.GetStatusEffectStacks(StatusEffectType.STEALTH);
+        if (stealthStacks > 0)
+        {
+            ApplyStealthGA applyStealthGa = new(stealthStacks, HeroView);
+            ActionSystem.Instance.AddReaction(applyStealthGa);
+        }
+        
+        int damageMultiplierStacks = HeroView.GetStatusEffectStacks(StatusEffectType.DAMAGE_MULTIPLIER);
+        if (damageMultiplierStacks > 0)
+        {
+            ApplyDamageMultiplierGA applyDamageMultiplierGa = new(damageMultiplierStacks, HeroView);
+            ActionSystem.Instance.AddReaction(applyDamageMultiplierGa);
         }
         
         for (int i = 0; i < CardDrawAmount; i++)

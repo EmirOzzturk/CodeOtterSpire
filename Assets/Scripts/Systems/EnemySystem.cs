@@ -19,10 +19,12 @@ public class EnemySystem : Singleton<EnemySystem>
         ActionSystem.AttachPerformer<AttackHeroGA>(AttackHeroPerformer);
         ActionSystem.AttachPerformer<KillEnemyGA>(KillEnemyPerformer);
         ActionSystem.AttachPerformer<AddAttackPowerGA>(AddAttackPowerPerformer);
+        ActionSystem.AttachPerformer<CombatStartGA>(CombatStartPerformer);
     }
 
     void OnDisable()
     {
+        ActionSystem.DetachPerformer<CombatStartGA>();
         ActionSystem.DetachPerformer<AddAttackPowerGA>();
         ActionSystem.DetachPerformer<KillEnemyGA>();
         ActionSystem.DetachPerformer<EnemyTurnGA>();
@@ -52,6 +54,13 @@ public class EnemySystem : Singleton<EnemySystem>
                 ActionSystem.Instance.AddReaction(applyBurnGa);
             }
             
+            int vulnerableStacks = enemy.GetStatusEffectStacks(StatusEffectType.VULNERABLE);
+            if (vulnerableStacks > 0)
+            {
+                ApplyVulnerableGA applyVulnerableGa = new(vulnerableStacks, enemy);
+                ActionSystem.Instance.AddReaction(applyVulnerableGa);
+            }
+            
             if (enemy.EnemyEffects is null)
             {
                 Debug.LogWarning($"{enemy.name} → EnemyEffects listesi boş.");
@@ -67,7 +76,7 @@ public class EnemySystem : Singleton<EnemySystem>
                     new PerformEffectGA(effect, targets, enemy)
                 );
             }
-
+            
         }
         yield return null;
     }
@@ -76,6 +85,13 @@ public class EnemySystem : Singleton<EnemySystem>
     {
         EnemyView attacker = attackHeroGa?.Attacker;
         if (attacker == null) yield break;
+
+        if (HeroSystem.Instance.HeroView.Targetable == 0)
+        {
+            HeroAttackedWhileStealthGA heroAttackedWhileStealthGa = new(attacker);
+            ActionSystem.Instance.AddReaction(heroAttackedWhileStealthGa);
+            yield break;
+        }
         
         Tween tween = attacker.transform.DOMoveX(attacker.transform.position.x - 1f, 0.15f);
         yield return tween.WaitForCompletion();
@@ -112,6 +128,16 @@ public class EnemySystem : Singleton<EnemySystem>
                 yield return Wait.Half;   // Statik nesne, GC yok
             }
         }
+    }
+
+    private IEnumerator CombatStartPerformer(CombatStartGA combatStartGa)
+    {
+        foreach (var enemy in enemyBoardView.EnemyViews)
+        {
+            yield return enemy.PerformInitialEffects(enemy.InitialEffects);
+        }
+
+        yield return null;
     }
 
 }

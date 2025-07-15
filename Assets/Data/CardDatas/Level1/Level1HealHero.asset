@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CardName>k__BackingField: Heal
   <Description>k__BackingField: Heal Yourself 10 HP
-  <Mana>k__BackingField: 1
   <Image>k__BackingField: {fileID: 21300000, guid: f459e170034c47240818cf8f6bd514b2, type: 3}
+  <Mana>k__BackingField: 1
   <Perks>k__BackingField: []
   <ManualTargetEffect>k__BackingField:
     rid: -2
@@ -23,7 +23,7 @@ MonoBehaviour:
   - <TargetMode>k__BackingField:
       rid: 6538695923114704972
     <Effect>k__BackingField:
-      rid: 6538695923114704973
+      rid: 6993868401613996180
   references:
     version: 2
     RefIds:
@@ -32,7 +32,8 @@ MonoBehaviour:
     - rid: 6538695923114704972
       type: {class: HeroTM, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6538695923114704973
-      type: {class: HealDamageEffect, ns: , asm: Assembly-CSharp}
+    - rid: 6993868401613996180
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
-        healAmount: 10
+        statusEffectType: 1
+        stackCount: 34

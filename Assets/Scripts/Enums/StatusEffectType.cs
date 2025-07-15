@@ -2,6 +2,9 @@
 public enum StatusEffectType
 {
     ARMOR,
-    BURN
-    
+    BURN,
+    PERSISTENT_ARMOR,
+    STEALTH,
+    DAMAGE_MULTIPLIER,
+    VULNERABLE,
 }

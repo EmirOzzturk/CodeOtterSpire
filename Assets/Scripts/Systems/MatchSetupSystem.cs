@@ -11,7 +11,7 @@ public class MatchSetupSystem : MonoBehaviour
     private void Start()
     {
         HeroSystem.Instance.Setup();
-        ManaSystem.Instance.ResetManaText();
+        ManaSystem.Instance.FullRefillNow();
         EnemySystem.Instance.Setup(enemyDatas);
 
         if (HeroSystem.Instance.GetInitialPerkData() != null)
@@ -23,7 +23,11 @@ public class MatchSetupSystem : MonoBehaviour
         }
         
         DrawCardsGA drawCardsGa = new(HeroSystem.Instance.CardDrawAmount);
-        ActionSystem.Instance.Perform(drawCardsGa);
+        ActionSystem.Instance.Perform(drawCardsGa, () =>
+        {
+            ActionSystem.Instance.Perform(new CombatStartGA());
+        });
+
     }
 
     private void OnDestroy()

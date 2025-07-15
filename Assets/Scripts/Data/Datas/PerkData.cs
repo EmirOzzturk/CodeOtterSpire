@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SerializeReferenceEditor;
 using UnityEngine;
 
@@ -13,11 +14,12 @@ public class PerkData : ScriptableObject
     public PerkCondition PerkCondition { get; private set; }
 
     /*────────── EFEKT ──────────*/
-    [field: Header("    Efekt"), SerializeReference, SR]
-    public AutoTargetEffect AutoTargetEffect { get; private set; }
+    [field: Header("Efekt"), SerializeReference, SR]
+    public List<AutoTargetEffect> AutoTargetEffects { get; private set; }
 
     /*────────── AYARLAR ──────────*/
-    [field: Header("Ayarlar"), SerializeField]
+
+    [field: Header("Hedef Seçimi"), SerializeField]
     public bool UseAutoTarget { get; private set; } = true;
 
     [field: SerializeField]

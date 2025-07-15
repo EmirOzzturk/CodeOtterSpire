@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Action_System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Perk
 {
@@ -9,13 +10,13 @@ public class Perk
     
     private readonly PerkData data;
     private readonly PerkCondition condition;
-    private readonly AutoTargetEffect effect;
+    private readonly List<AutoTargetEffect> effects;
 
     public Perk(PerkData perkData)
     {
         data = perkData;
         condition = data.PerkCondition;
-        effect = data.AutoTargetEffect;
+        effects = data.AutoTargetEffects;
     }
 
     public void OnAdd()
@@ -30,22 +31,31 @@ public class Perk
 
     private void Reaction(GameAction gameAction)
     {
-        if (condition.SubConditionIsMet())
-        {
-            // Targets are set
-            List<CombatantView> targets = new();
-            if (data.UseActionCasterAsTarget && gameAction is IHaveCaster haveCaster)
-            {
-                targets.Add(haveCaster.Caster);
-            }
-            if (data.UseAutoTarget)
-            {
-                targets.AddRange(effect.TargetMode.GetTargets());
-            }
+        // 1) Guard clause – koşul sağlanmıyorsa direkt çık
+        if (condition == null || !condition.SubConditionIsMet())
+            return;
 
-            // Add action
-            GameAction perkEffectAction = effect.Effect.GetGameAction(targets, HeroSystem.Instance.HeroView);
-            ActionSystem.Instance.AddReaction(perkEffectAction);
+        foreach (var autoTargetEffect in effects)
+        {
+            // 2) Pooled list – GC alloc yok, try/finally ile güvenli iade
+            var targets = ListPool<CombatantView>.Get();
+            try
+            {
+                // ——— Hedef topla ————————————————————————————
+                if (data.UseActionCasterAsTarget && gameAction is IHaveCaster { Caster: not null } haveCaster)
+                    targets.Add(haveCaster.Caster);
+
+                if (data.UseAutoTarget)
+                    targets.AddRange(autoTargetEffect.TargetMode.GetTargets());
+
+                // ——— GA oluştur & ActionSystem’e ekle ——————————
+                var action = autoTargetEffect.Effect.GetGameAction(targets, HeroSystem.Instance.HeroView);
+                ActionSystem.Instance.AddReaction(action);
+            }
+            finally
+            {
+                ListPool<CombatantView>.Release(targets);
+            }
         }
     }
 }

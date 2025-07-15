@@ -8,7 +8,8 @@ public class AddStatusEffectEffect : CardEffect
     [SerializeField] private int stackCount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)
     {
-        return new AddStatusEffectGA(statusEffectType, stackCount, targets);
+        AddStatusEffectGA addStatusEffectGa = new (statusEffectType, stackCount, targets, caster);
+        return addStatusEffectGa;
     }
     
     public override int GetEffectValue()

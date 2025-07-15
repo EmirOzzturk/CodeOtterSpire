@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7682929924363558156}
   - component: {fileID: 1328520865081452377}
   - component: {fileID: 1139485015721881502}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,9 +265,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2abea6596d61840a735468ab3906be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spritePairs:
+  - statusType: 0
+    sprite: {fileID: 21300000, guid: 3ad39459eef4b78439dcaf76f247a4e1, type: 3}
+  - statusType: 1
+    sprite: {fileID: -1751321830, guid: 81e24a0f9e1a29346847bbcbf6ed0d21, type: 3}
+  - statusType: 2
+    sprite: {fileID: 21300000, guid: 261eb280b42f81243ac28e5147deadd6, type: 3}
+  - statusType: 3
+    sprite: {fileID: 301349466, guid: 81e24a0f9e1a29346847bbcbf6ed0d21, type: 3}
+  - statusType: 4
+    sprite: {fileID: 613913648, guid: 81e24a0f9e1a29346847bbcbf6ed0d21, type: 3}
+  - statusType: 5
+    sprite: {fileID: 411053489, guid: 81e24a0f9e1a29346847bbcbf6ed0d21, type: 3}
   statusEffectUIPrefab: {fileID: 2667708529835888371, guid: cdc749f23e5805d4288eee061b19f3c1, type: 3}
-  armorSprite: {fileID: 21300000, guid: 3ad39459eef4b78439dcaf76f247a4e1, type: 3}
-  burnSprite: {fileID: -1751321830, guid: 81e24a0f9e1a29346847bbcbf6ed0d21, type: 3}
 --- !u!114 &7666480252660654708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8899207885746542899}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CombatantViewBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +451,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7943874551166033317}
   - component: {fileID: 1866599461973996274}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,6 +525,6 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

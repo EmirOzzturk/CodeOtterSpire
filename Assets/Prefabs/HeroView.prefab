@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CombatantViewBase
       objectReference: {fileID: 0}
+    - target: {fileID: 5290669991785887691, guid: 46ccd59010611f04d8d4034a34adf10e, type: 3}
+      propertyPath: spritePairs.Array.data[5].sprite
+      value: 
+      objectReference: {fileID: -934269629, guid: 81e24a0f9e1a29346847bbcbf6ed0d21, type: 3}
     - target: {fileID: 8899207885746542899, guid: 46ccd59010611f04d8d4034a34adf10e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

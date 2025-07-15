@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Action_System;
 using UnityEngine;
 using Utils;
@@ -21,7 +22,7 @@ public class DamageSystem : Singleton<DamageSystem>
     }
     
     // publics
-    public void CheckCombatantViewIsDead(CombatantView target)
+    public bool CheckCombatantViewIsDead(CombatantView target)
     {
         if (target.CurrentHealth <= 0)
         {
@@ -29,11 +30,17 @@ public class DamageSystem : Singleton<DamageSystem>
             {
                 KillEnemyGA killEnemyGa = new(enemyView);
                 ActionSystem.Instance.AddReaction(killEnemyGa);
+                return true;
             }
             else
             {
                 InCombatUISystem.Instance.ShowResultPanel(false);
+                return true;
             }
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -42,20 +49,30 @@ public class DamageSystem : Singleton<DamageSystem>
         foreach (var target in dealDamageGA.Targets)
         {
             if (target == null) yield break;
-            target.Damage(dealDamageGA.Amount);
+
+            var damageMultiplier = dealDamageGA.Caster.GetStatusEffectStacks(StatusEffectType.DAMAGE_MULTIPLIER);
+            var finalDamage = damageMultiplier == 0 ? dealDamageGA.Amount : damageMultiplier * dealDamageGA.Amount;
+            target.Damage(finalDamage);
+            
             if (damageVFX != null)
             {
                 Instantiate(damageVFX, target.transform.position, Quaternion.identity);
                 SFXSystem.Instance.Play(SFXType.Hit);
                 yield return Wait.Half;
             }
-            
-            CheckCombatantViewIsDead(target);
+
+            if (CheckCombatantViewIsDead(target))
+            {
+                HealDamageGA healDamageGA = new(dealDamageGA.HealOnKill,
+                    new() { HeroSystem.Instance.HeroView }, HeroSystem.Instance.HeroView);
+                ActionSystem.Instance.AddReaction(healDamageGA);
+            }
         }
     } 
     
     private IEnumerator HealDamagePerformer(HealDamageGA healDamageGA)
     {
+        if (healDamageGA.Amount == 0) yield break;
         foreach (var target in healDamageGA.Targets)
         {
             target.Heal(healDamageGA.Amount);

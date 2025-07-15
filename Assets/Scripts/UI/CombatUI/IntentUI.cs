@@ -1,35 +1,83 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Intent tipine göre ikon ve değer gösteren UI bileşeni.
+/// Inspector’da intent-sprite eşleşmelerini düzenlemek için
+/// <see cref="IntentSpritePair"/> listesini kullanır.
+/// </summary>
 public class IntentUI : MonoBehaviour
 {
-    [SerializeField] private Sprite healSprite, attackSprite, powerBoostSprite;
-    [SerializeField] private TMP_Text value;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-
-    public void UpdateIntentUI(IntentType intentType, int intentValue)
+    [Serializable]
+    private struct IntentSpritePair
     {
-        spriteRenderer.sprite = GetSpriteByType(intentType);
-        value.text = intentValue.ToString();
+        public IntentType intentType;
+        public Sprite      sprite;
     }
+
+    [Header("Sprite Eşleşmeleri")]
+    [Tooltip("Inspector’dan her IntentType için bir Sprite tanımlayın.")]
+    [SerializeField] private List<IntentSpritePair> spritePairs = new();
+
+    [Header("UI Referansları")]
+    [SerializeField] private TMP_Text      valueText;
+    [SerializeField] private SpriteRenderer iconRenderer;   // Canvas kullanıyorsanız Image tercih edin
+
+    // Runtime’da hızlı erişim için dictionary oluşturuyoruz.
+    private readonly Dictionary<IntentType, Sprite> _spriteLookup = new();
+
+    private void Awake()
+    {
+        // Listeyi dictionary’ye dönüştür – duplicate veya null’lara karşı koruma
+        foreach (var pair in spritePairs)
+        {
+            if (pair.sprite == null)
+            {
+                Debug.LogWarning($"{name}: '{pair.intentType}' için sprite atanmamış.", this);
+                continue;
+            }
+
+            if (_spriteLookup.ContainsKey(pair.intentType))
+            {
+                Debug.LogWarning($"{name}: '{pair.intentType}' için birden fazla sprite tanımlandı. İlk değer kullanılacak.", this);
+                continue;
+            }
+
+            _spriteLookup.Add(pair.intentType, pair.sprite);
+        }
+    }
+
+    /// <summary>
+    /// Hem ikon hem metni günceller (en yaygın kullanım).
+    /// </summary>
+    public void Refresh(IntentType intentType, int intentValue)
+    {
+        UpdateIntentType(intentType);
+        UpdateIntentValue(intentValue);
+    }
+
+    /// <summary>
+    /// Yalnızca değeri günceller.
+    /// </summary>
     public void UpdateIntentValue(int intentValue)
     {
-        value.text = intentValue.ToString();
-    }    
+        valueText.text = intentValue.ToString();
+    }
+
+    /// <summary>
+    /// Yalnızca ikonu günceller.
+    /// </summary>
     public void UpdateIntentType(IntentType intentType)
     {
-        spriteRenderer.sprite = GetSpriteByType(intentType);
-    }
-    
-    private Sprite GetSpriteByType(IntentType intentType)
-    {
-        return intentType switch
+        if (_spriteLookup.TryGetValue(intentType, out var sprite))
         {
-            IntentType.HEALER => healSprite,
-            IntentType.ATTACKER => attackSprite,
-            IntentType.POWER_BOOSTER => powerBoostSprite,
-            _ => null,
-        };
+            iconRenderer.sprite = sprite;
+        }
+        else
+        {
+            Debug.LogWarning($"{name}: '{intentType}' türü için sprite bulunamadı.", this);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Action_System;
@@ -15,9 +16,19 @@ public class EnemyView : CombatantView
     public int CurrentIndexForIntentEffect  { get; private set; }
     public List<IntentType> IntentTypes { get; private set; }
     public List<List<EnemyEffect>> EnemyEffects { get; private set; }
+    public List<EnemyEffect> InitialEffects { get; private set; }
+
+    public void Start()
+    {
+        TurnSystem.Instance.OnTurnChanged += NextIntent;    
+    }
+
+    public void OnDestroy()
+    {
+        TurnSystem.Instance.OnTurnChanged -= NextIntent;
+    }
 
     #region Setup -------------------------------------------------------------
-
     public void Setup(EnemyData data)
     {
         CurrentIndexForIntentEffect = 0;
@@ -25,13 +36,10 @@ public class EnemyView : CombatantView
         IntentTypes = data.GetAllIntents();
         EnemyEffects = data.GetEffectGroups();
         AttackPower = data.AttackPower;
-
-        PerformInitialEffects(data);
+        InitialEffects = data.InitialEffects;
         
-        SetupBase(data.Health, data.Image);
+        SetupBase(data.Health, data.Image, null);
         UpdateIntentInitialUI();
-
-        TurnSystem.Instance.OnTurnChanged += NextIntent;
     }
 
     private void UpdateIntentInitialUI()
@@ -42,7 +50,7 @@ public class EnemyView : CombatantView
             ? AttackPower
             : (EnemyEffects.Count > 0 ? EnemyEffects[CurrentIndexForIntentEffect][0].GetEffectValue() : 0);
 
-        intentUI.UpdateIntentUI(IntentTypes[CurrentIndexForIntentEffect], value);
+        intentUI.Refresh(IntentTypes[CurrentIndexForIntentEffect], value);
     }
 
     #endregion ----------------------------------------------------------------
@@ -70,16 +78,16 @@ public class EnemyView : CombatantView
         }
     }
 
-    public IEnumerator PerformInitialEffects(EnemyData data)
+    public IEnumerator PerformInitialEffects(List<EnemyEffect> initialEffects)
     {
         // Liste yoksa ya da eleman içermiyorsa hiçbir şey yapma
-        if (data.InitialEffects is not { Count: > 0 })
+        if (initialEffects is not { Count: > 0 })
             yield break;
 
         // Buraya gelmişsek en az bir efekt var
         var heroTarget = new List<CombatantView> { HeroSystem.Instance.HeroView };
 
-        foreach (var effect in data.InitialEffects)
+        foreach (var effect in initialEffects)
         {
             ActionSystem.Instance.AddReaction(
                 new PerformEffectGA(effect, heroTarget, this)

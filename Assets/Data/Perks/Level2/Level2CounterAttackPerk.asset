@@ -15,27 +15,28 @@ MonoBehaviour:
   <Image>k__BackingField: {fileID: 21300000, guid: ed83100f10a166b41b51cbaa0297978f, type: 3}
   <PerkCondition>k__BackingField:
     rid: 6538695910637699144
-  <AutoTargetEffect>k__BackingField:
-    rid: 6538695719168507987
+  <AutoTargetEffects>k__BackingField:
+  - rid: 6993868401613996240
   <UseAutoTarget>k__BackingField: 0
   <UseActionCasterAsTarget>k__BackingField: 1
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 6538695719168507987
-      type: {class: AutoTargetEffect, ns: , asm: Assembly-CSharp}
-      data:
-        <TargetMode>k__BackingField:
-          rid: -2
-        <Effect>k__BackingField:
-          rid: 6538695719168507990
-    - rid: 6538695719168507990
-      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        damageAmount: 3
     - rid: 6538695910637699144
       type: {class: OnEnemyAttackCondition, ns: , asm: Assembly-CSharp}
       data:
         reactionTiming: 1
+    - rid: 6993868401613996240
+      type: {class: AutoTargetEffect, ns: , asm: Assembly-CSharp}
+      data:
+        <TargetMode>k__BackingField:
+          rid: 6993868401613996241
+        <Effect>k__BackingField:
+          rid: 6993868401613996242
+    - rid: 6993868401613996241
+      type: {class: NoTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6993868401613996242
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damageAmount: 3
