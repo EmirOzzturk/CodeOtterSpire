@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Action_System;
-using Systems.Card_System;
 using UnityEngine;
 
 public class HeroSystem : Singleton<HeroSystem>
@@ -107,11 +106,8 @@ public class HeroSystem : Singleton<HeroSystem>
             ApplyDamageMultiplierGA applyDamageMultiplierGa = new(damageMultiplierStacks, HeroView);
             ActionSystem.Instance.AddReaction(applyDamageMultiplierGa);
         }
-        
-        for (int i = 0; i < CardDrawAmount; i++)
-        {
-            DrawCardsGA drawCardsGa = new(1);
-            ActionSystem.Instance.AddReaction(drawCardsGa);   
-        }
+
+        DrawCardsGA drawCardsGa = new(CardDrawAmount);
+        ActionSystem.Instance.AddReaction(drawCardsGa);   
     }
 }

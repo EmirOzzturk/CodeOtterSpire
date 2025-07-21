@@ -4,16 +4,15 @@ using UnityEngine;
 public class InteractionSystem : Singleton<InteractionSystem>
 {
    public bool PlayerIsDragging { get; set; } = false;
+   public bool IsModalOpen { get; set; } = false;
 
    public bool PlayerCanInteract()
    {
-      if (!ActionSystem.Instance.IsPreforming) return true;
-      return false;
+      return !ActionSystem.Instance.IsPreforming && !IsModalOpen;
    }
 
    public bool PlayerCanHover()
    {
-      if (PlayerIsDragging) return false;
-      return true;
+      return !PlayerIsDragging && !IsModalOpen;
    }
 }

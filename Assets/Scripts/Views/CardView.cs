@@ -6,10 +6,20 @@ using Debug = UnityEngine.Debug;
 
 public class CardView : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
     [SerializeField] private TMP_Text mana;
-    [SerializeField] private SpriteRenderer imageSr;
+    [SerializeField] private SpriteRenderer cardImageSr;
+
+    [Header("Background")]
+    [SerializeField] private SpriteRenderer backgroundSr;            // <-- arka planı çizen SR
+    [SerializeField] private Sprite redBg;    // 4 farklı sprite
+    [SerializeField] private Sprite yellowBg;
+    [SerializeField] private Sprite whiteBg;
+    [SerializeField] private Sprite greenBg;
+
+    [Header("Misc")]
     [SerializeField] private GameObject wrapper;
     [SerializeField] private LayerMask dropLayer;
     public Card Card {get; private set;}
@@ -27,7 +37,8 @@ public class CardView : MonoBehaviour
         title.text = card.Title;
         description.text = card.Description;
         mana.text = card.Mana.ToString();
-        imageSr.sprite = card.Image;
+        cardImageSr.sprite = card.Image;
+        backgroundSr.sprite = GetBackgroundSprite(card);
     }
     
     // Mouse Actions
@@ -35,7 +46,7 @@ public class CardView : MonoBehaviour
     {
         if (!InteractionSystem.Instance.PlayerCanHover()) return;
         wrapper.SetActive(false);
-        Vector3 pos = new(transform.position.x, -2, 0);
+        Vector3 pos = new(transform.position.x, -2.5f, 0);
         CardViewHoverSystem.Instance.Show(Card, pos);
     }
     void OnMouseExit()
@@ -95,6 +106,17 @@ public class CardView : MonoBehaviour
             }
             InteractionSystem.Instance.PlayerIsDragging = false;
         }
-        
+    }
+    
+    private Sprite GetBackgroundSprite(Card card)
+    {
+        return card.cardData.CardColor switch
+        {
+            CardColor.RED    => redBg,
+            CardColor.GREEN  => greenBg,
+            CardColor.WHITE  => whiteBg,
+            CardColor.YELLOW => yellowBg,
+            _                => whiteBg,
+        };
     }
 }

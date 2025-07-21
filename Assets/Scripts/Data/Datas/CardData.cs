@@ -15,6 +15,8 @@ public class CardData : ScriptableObject
     /*────────── KAYNAK & GÖRSEL ──────────*/
     [field: Header("Görsel"), SerializeField]
     public Sprite Image { get; private set; }
+    [field: SerializeField]
+    public CardColor CardColor { get; private set; }
     
     [field: Header("Kaynak"), SerializeField]
     public int Mana { get; private set; }
