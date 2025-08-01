@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AddStatusEffectEffect : CardEffect
 {
-    [SerializeField] private StatusEffectType statusEffectType;
+    [SerializeField] private StatusEffectData statusEffectData;
     [SerializeField] private int stackCount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)
     {
-        AddStatusEffectGA addStatusEffectGa = new (statusEffectType, stackCount, targets, caster);
+        AddStatusEffectGA addStatusEffectGa = new (new StatusEffect(statusEffectData, stackCount), targets, caster);
         return addStatusEffectGa;
     }
     

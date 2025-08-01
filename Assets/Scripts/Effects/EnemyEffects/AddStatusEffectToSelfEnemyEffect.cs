@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AddStatusEffectToSelfEnemyEffect : EnemyEffect
 {
-    [SerializeField] private StatusEffectType statusEffectType;
+    [SerializeField] private StatusEffectData statusEffectData;
     [SerializeField] private int stackCount;
     public override GameAction GetGameAction(List<CombatantView> targets, CombatantView caster)
     {
-        return new AddStatusEffectGA(statusEffectType, stackCount, new() { caster });
+        return new AddStatusEffectGA(new StatusEffect(statusEffectData, stackCount), new (){caster});
     }
 
     public override int GetEffectValue()

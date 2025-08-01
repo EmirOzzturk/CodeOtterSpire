@@ -29,15 +29,15 @@ public class StatusEffectSystem : Singleton<StatusEffectSystem>
                 yield break;
             }
             
-            target.AddStatusEffect(addStatusEffectGA.StatusEffectType, addStatusEffectGA.StackCount);
+            target.AddStatusEffect(addStatusEffectGA.StatusEffect);
             yield return Wait.Quarter; // add animation
         }
     }
     
     // publics + Event Handlers
-    public void OnAddStatusEffect(StatusEffectType statusEffectType, CombatantView combatantView)
+    public void OnAddStatusEffect(StatusEffect statusEffect, CombatantView combatantView)
     {
-        switch (statusEffectType)
+        switch (statusEffect.StatusEffectType)
         {
             case StatusEffectType.STEALTH:
                 combatantView.Targetable = 0;
@@ -47,13 +47,14 @@ public class StatusEffectSystem : Singleton<StatusEffectSystem>
                 break;
         }
     } 
-    public void OnRemoveStatusEffect(StatusEffectType statusEffectType, CombatantView combatantView)
+    public void OnRemoveStatusEffect(StatusEffect statusEffect, CombatantView combatantView)
     {
-        switch (statusEffectType)
+        switch (statusEffect.StatusEffectType)
         {
             case StatusEffectType.STEALTH:
                 combatantView.Targetable = 1;
-                ActionSystem.Instance.AddReaction(new AddStatusEffectGA(StatusEffectType.DAMAGE_MULTIPLIER, 2,
+                ActionSystem.Instance.AddReaction(new AddStatusEffectGA(
+                    StatusEffectCreator.Instance.Create(StatusEffectType.DAMAGE_MULTIPLIER, 2),
                     new() { combatantView }));
                 break;
             default:

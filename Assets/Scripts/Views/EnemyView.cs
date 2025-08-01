@@ -26,6 +26,7 @@ public class EnemyView : CombatantView
     public void OnDestroy()
     {
         if (TurnSystem.Instance == null) return;
+        DestroyBase();
         TurnSystem.Instance.OnTurnChanged -= NextIntent;
     }
 

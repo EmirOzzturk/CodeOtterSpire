@@ -30,7 +30,7 @@ public class StatusEffectApplySystem : Singleton<StatusEffectApplySystem>
         CombatantView target = applyBurnGa.Target as CombatantView;
         Instantiate(burnVFX, target.transform.position, Quaternion.identity);
         target.Damage(applyBurnGa.BurnDamage);
-        target.RemoveStatusEffect(StatusEffectType.BURN, 1);
+        target.RemoveStatusEffect(StatusEffectCreator.Instance.Create(StatusEffectType.BURN), 1);
         yield return Wait.One;
         
         DamageSystem.Instance.CheckCombatantViewIsDead(target);
@@ -40,7 +40,7 @@ public class StatusEffectApplySystem : Singleton<StatusEffectApplySystem>
     {
         CombatantView target = applyArmorGa.Target as CombatantView;
         // Instantiate(burnVFX, target.transform.position, Quaternion.identity);
-        AddStatusEffectGA addStatusEffectGa = new(StatusEffectType.ARMOR, applyArmorGa.ArmorValue,
+        AddStatusEffectGA addStatusEffectGa = new(StatusEffectCreator.Instance.Create(StatusEffectType.ARMOR, applyArmorGa.ArmorValue),
             new() { applyArmorGa.Target });
         
         ActionSystem.Instance.Perform(addStatusEffectGa);
@@ -51,10 +51,10 @@ public class StatusEffectApplySystem : Singleton<StatusEffectApplySystem>
     {
         CombatantView target = applyStealthGa.Target as CombatantView;
         
-        target.RemoveStatusEffect(StatusEffectType.STEALTH, 1);
+        target.RemoveStatusEffect(StatusEffectCreator.Instance.Create(StatusEffectType.STEALTH), 1);
         // Instantiate(burnVFX, target.transform.position, Quaternion.identity);
 
-        AddStatusEffectGA addStatusEffectGa = new(StatusEffectType.DAMAGE_MULTIPLIER, 2,
+        AddStatusEffectGA addStatusEffectGa = new(StatusEffectCreator.Instance.Create(StatusEffectType.DAMAGE_MULTIPLIER, 2),
             new() { applyStealthGa.Target });
         
         ActionSystem.Instance.Perform(addStatusEffectGa);
@@ -65,7 +65,7 @@ public class StatusEffectApplySystem : Singleton<StatusEffectApplySystem>
     {
         CombatantView target = applyDamageMultiplierGa.Target as CombatantView;
         
-        target.RemoveStatusEffect(StatusEffectType.DAMAGE_MULTIPLIER, 2);
+        target.RemoveStatusEffect(StatusEffectCreator.Instance.Create(StatusEffectType.DAMAGE_MULTIPLIER), 2);
         // Instantiate(burnVFX, target.transform.position, Quaternion.identity);
         
         yield return Wait.Quarter;
@@ -74,7 +74,7 @@ public class StatusEffectApplySystem : Singleton<StatusEffectApplySystem>
     private IEnumerator ApplyVulnerablePerformer(ApplyVulnerableGA applyVulnerableGa)
     {
         CombatantView target = applyVulnerableGa.Target as CombatantView;
-        target.RemoveStatusEffect(StatusEffectType.VULNERABLE, 1);
+        target.RemoveStatusEffect(StatusEffectCreator.Instance.Create(StatusEffectType.VULNERABLE), 1);
         yield return Wait.Seconds(0.1f);
     }
 }
