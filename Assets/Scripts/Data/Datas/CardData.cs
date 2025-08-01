@@ -11,6 +11,12 @@ public class CardData : ScriptableObject
 
     [field: TextArea, SerializeField]
     public string Description { get; private set; }
+    
+    [field: SerializeField]
+    public CardType CardType { get; private set; }
+    
+    [field: SerializeField]
+    public CardRarity CardRarity { get; private set; }
 
     /*────────── KAYNAK & GÖRSEL ──────────*/
     [field: Header("Görsel"), SerializeField]
@@ -31,4 +37,24 @@ public class CardData : ScriptableObject
 
     [field: SerializeField]
     public List<AutoTargetEffect> OtherEffects { get; private set; }
+    
+    /*────────── DESTE OLUŞTURMADA KULLANILAN ÖZELLİKLER ──────────*/
+    [field: Header("Deste Oluşturmada Kullanılan Özellikler"), SerializeField]
+    public bool IsLocked { get; set; } = false;
+    
+    [field: SerializeField]
+    public bool IsChangeable { get; set; } = true;
+    
+    
+    /*────────── SPECIAL GETTER ──────────*/
+    public int GetCopyLimit()
+    {
+        return CardRarity switch
+        {
+            CardRarity.Rare      => 3,
+            CardRarity.Legendary => 2,
+            CardRarity.Crimson   => 2,
+            _                    => int.MaxValue   // Common (veya tanımsız) → sınırsız
+        };
+    }
 }

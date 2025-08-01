@@ -7,6 +7,7 @@ public class CardThumbnailView : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
+    [SerializeField] private TMP_Text cardType;
     [SerializeField] private TMP_Text mana;
     [SerializeField] private Image cardImage;
 
@@ -27,6 +28,7 @@ public class CardThumbnailView : MonoBehaviour
 
         title.text = cardData.CardName;
         description.text = cardData.Description;
+        cardType.text = cardData.CardType.ToString();
         mana.text = cardData.Mana.ToString();
         cardImage.sprite = cardData.Image;
         backgroundImage.sprite = GetBackgroundSprite(cardData);

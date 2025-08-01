@@ -9,6 +9,7 @@ public class CardView : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
+    [SerializeField] private TMP_Text cardType;
     [SerializeField] private TMP_Text mana;
     [SerializeField] private SpriteRenderer cardImageSr;
 
@@ -36,6 +37,7 @@ public class CardView : MonoBehaviour
         Card = card;
         title.text = card.Title;
         description.text = card.Description;
+        cardType.text = card.CardTypeString;
         mana.text = card.Mana.ToString();
         cardImageSr.sprite = card.Image;
         backgroundSr.sprite = GetBackgroundSprite(card);

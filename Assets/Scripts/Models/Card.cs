@@ -8,6 +8,7 @@ public class Card
     
     public string Title => cardData.CardName; // Name of the Object
     public string Description => cardData.Description;
+    public string CardTypeString => cardData.CardType.ToString();
     public Sprite Image => cardData.Image;
     public CardEffect ManualTargetEffect => cardData.ManualTargetEffect;
     public List<PerkData> Perks => cardData.Perks;
